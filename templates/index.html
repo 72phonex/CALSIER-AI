@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calsifer Chat</title>
+  <style>
+    body { background:#111; color:#eee; font-family:sans-serif; }
+    #chat { max-width:600px; margin:auto; }
+    .msg { margin:10px 0; }
+  </style>
+</head>
+<body>
+  <div id="chat"></div>
+  <form id="form">
+    <input id="msg" autocomplete="off">
+    <button>Send</button>
+  </form>
+<script>
+const chat = document.getElementById("chat");
+document.getElementById("form").onsubmit = async e => {
+  e.preventDefault();
+  let msg = document.getElementById("msg").value;
+  chat.innerHTML += `<div class="msg">You: ${msg}</div>`;
+  let res = await fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:"msg="+msg});
+  let data = await res.json();
+  chat.innerHTML += `<div class="msg">${data.reply}</div>`;
+};
+</script>
+</body>
+</html>
