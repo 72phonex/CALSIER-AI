@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: calsifer-ai
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    disk:
+      name: calsifer-data
+      mountPath: /data
+      sizeGB: 1
